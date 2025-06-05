@@ -48,7 +48,9 @@ const {
     <link rel="preload" href="/hero-bg.jpg" as="image" />
     
     <!-- Global Styles -->
-    <link rel="stylesheet" href="/src/styles/global.css" />
+    <style is:global>
+      @import '../styles/global.css';
+    </style>
   </head>
   <body>
     <slot />

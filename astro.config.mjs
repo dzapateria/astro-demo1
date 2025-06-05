@@ -4,22 +4,26 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   output: 'static',  // ← IMPORTANTE: Faltaba esta línea
   site: 'https://streamflix.example.com',
-  base: '/',
+  base: './',
   trailingSlash: 'ignore',
   
   // Build configuration optimizada para producción
   build: {
     assets: 'assets',
-    inlineStylesheets: 'always',  // ← CAMBIAR: de 'auto' a 'always'
+    inlineStylesheets: 'auto',  // ← REVERTIR: de 'always' a 'auto' para mejor compatibilidad
   },
   
   // Eliminar configuraciones de desarrollo
   // server: { ... },  ← Comentar o eliminar
   
-  // Vite configuration simplificada
+  // Vite configuration optimizada para CSS
   vite: {
     build: {
       cssCodeSplit: false,  // ← AÑADIR: Evita problemas de CSS splitting
+      assetsInlineLimit: 0, // ← AÑADIR: Evita inline de assets para mejor debugging
+    },
+    css: {
+      devSourcemap: true,   // ← AÑADIR: Mejora debugging en desarrollo
     },
   },
   

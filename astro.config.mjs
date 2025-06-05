@@ -1,43 +1,29 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
 export default defineConfig({
+  output: 'static',  // ← IMPORTANTE: Faltaba esta línea
   site: 'https://streamflix.example.com',
   base: '/',
   trailingSlash: 'ignore',
   
-  // Build configuration
+  // Build configuration optimizada para producción
   build: {
     assets: 'assets',
-    inlineStylesheets: 'auto',
+    inlineStylesheets: 'always',  // ← CAMBIAR: de 'auto' a 'always'
   },
   
-  // Server configuration for development
-  server: {
-    port: 4321,
-    host: true,
-  },
+  // Eliminar configuraciones de desarrollo
+  // server: { ... },  ← Comentar o eliminar
   
-  // Vite configuration
+  // Vite configuration simplificada
   vite: {
-    css: {
-      devSourcemap: true,
-    },
-    define: {
-      'process.env.CONTEXT7_DEBUG': JSON.stringify(true),
-    },
-    optimizeDeps: {
-      exclude: [],
+    build: {
+      cssCodeSplit: false,  // ← AÑADIR: Evita problemas de CSS splitting
     },
   },
   
-  // Experimental features
-  experimental: {
-    // Add experimental features as they become available
-  },
-  
-  // Image optimization
+  // Resto de configuración mantener igual...
   image: {
     domains: ['images.unsplash.com', 'developer.apple.com', 'play.google.com', 'get.microsoft.com'],
     remotePatterns: [
@@ -48,21 +34,11 @@ export default defineConfig({
     ],
   },
   
-  // Prefetch configuration
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'viewport',
   },
   
-  // Markdown configuration
-  markdown: {
-    shikiConfig: {
-      theme: 'dark-plus',
-      wrap: true,
-    },
-  },
-  
-  // Redirects
   redirects: {
     '/home': '/',
     '/movies': '/#peliculas',

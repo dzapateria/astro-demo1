@@ -1,0 +1,194 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "StreamFlix - Tu plataforma de entretenimiento", 
+  description = "Descubre miles de películas, series y documentales en la mejor calidad. Streaming ilimitado con la experiencia más inmersiva." 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="streaming, películas, series, entretenimiento, netflix, steam" />
+    <meta name="author" content="StreamFlix" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/og-image.jpg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="/og-image.jpg" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link 
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" 
+      rel="stylesheet" 
+    />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/hero-bg.jpg" as="image" />
+    
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body>
+    <slot />
+    
+    <!-- Context7 Script -->
+    <script is:inline>
+      // Context7 initialization
+      (function() {
+        window.Context7 = {
+          state: {
+            theme: 'dark',
+            user: null,
+            favorites: [],
+            currentSection: 'home'
+          },
+          setState: function(newState) {
+            this.state = Object.assign({}, this.state, newState);
+            this.notifyListeners();
+          },
+          listeners: [],
+          subscribe: function(callback) {
+            this.listeners.push(callback);
+            var self = this;
+            return function() {
+              self.listeners = self.listeners.filter(function(l) { return l !== callback; });
+            };
+          },
+          notifyListeners: function() {
+            var self = this;
+            this.listeners.forEach(function(callback) {
+              callback(self.state);
+            });
+          }
+        };
+        
+        // Smooth scrolling for anchor links
+        document.addEventListener('DOMContentLoaded', function() {
+          var links = document.querySelectorAll('a[href^="#"]');
+          links.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+              e.preventDefault();
+              var href = link.getAttribute('href');
+              var target = document.querySelector(href);
+              if (target) {
+                target.scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            });
+          });
+          
+          // Intersection Observer for animations
+          var observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+          };
+          
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                var element = entry.target;
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+              }
+            });
+          }, observerOptions);
+          
+          // Observe elements with animation classes
+          document.querySelectorAll('.animate-on-scroll').forEach(function(el) {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+          });
+        });
+        
+        // Lazy loading for images
+        if ('IntersectionObserver' in window) {
+          var imageObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                var img = entry.target;
+                if (img.dataset && img.dataset.src) {
+                  img.src = img.dataset.src;
+                  img.classList.remove('lazy');
+                  imageObserver.unobserve(img);
+                }
+              }
+            });
+          });
+          
+          document.querySelectorAll('img[data-src]').forEach(function(img) {
+            imageObserver.observe(img);
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
+
+<style>
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+  }
+  
+  /* Loading state for lazy images */
+  img.lazy {
+    filter: blur(5px);
+    transition: filter 0.3s;
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Focus styles for accessibility */
+  *:focus {
+    outline: 2px solid var(--accent-red);
+    outline-offset: 2px;
+  }
+  
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>

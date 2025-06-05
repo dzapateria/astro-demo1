@@ -1,0 +1,562 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import MovieCard from '../components/MovieCard.astro';
+import Footer from '../components/Footer.astro';
+
+// Datos de ejemplo para las películas
+const featuredMovies = [
+  {
+    title: "El Último Reino",
+    image: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=600&fit=crop",
+    genre: "Acción",
+    year: 2024,
+    rating: 9.2,
+    duration: "2h 45min",
+    isNew: true,
+    is4K: true,
+    description: "Una épica aventura medieval llena de batallas épicas y traiciones."
+  },
+  {
+    title: "Cosmos Infinito",
+    image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=400&h=600&fit=crop",
+    genre: "Ciencia Ficción",
+    year: 2024,
+    rating: 8.8,
+    duration: "2h 20min",
+    isNew: true,
+    is4K: true,
+    description: "Un viaje intergaláctico que desafía los límites de la imaginación."
+  },
+  {
+    title: "Misterios de la Ciudad",
+    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop",
+    genre: "Thriller",
+    year: 2023,
+    rating: 8.5,
+    duration: "1h 55min",
+    isNew: false,
+    is4K: true,
+    description: "Un detective debe resolver el caso más complejo de su carrera."
+  },
+  {
+    title: "Amor en París",
+    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=600&fit=crop",
+    genre: "Romance",
+    year: 2023,
+    rating: 7.9,
+    duration: "1h 48min",
+    isNew: false,
+    is4K: false,
+    description: "Una historia de amor que florece en las calles de París."
+  },
+  {
+    title: "Aventuras Submarinas",
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=600&fit=crop",
+    genre: "Aventura",
+    year: 2024,
+    rating: 8.3,
+    duration: "2h 10min",
+    isNew: true,
+    is4K: true,
+    description: "Explora las profundidades del océano en esta increíble aventura."
+  }
+];
+
+const popularSeries = [
+  {
+    title: "La Corona Perdida",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=600&fit=crop",
+    genre: "Drama",
+    year: 2024,
+    rating: 9.1,
+    duration: "8 episodios",
+    isNew: true,
+    is4K: true,
+    description: "Una serie histórica que narra la lucha por el poder en la realeza."
+  },
+  {
+    title: "Futuro Distópico",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&h=600&fit=crop",
+    genre: "Sci-Fi",
+    year: 2023,
+    rating: 8.7,
+    duration: "10 episodios",
+    isNew: false,
+    is4K: true,
+    description: "Una visión oscura del futuro donde la tecnología controla todo."
+  },
+  {
+    title: "Comedia Central",
+    image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop",
+    genre: "Comedia",
+    year: 2024,
+    rating: 8.2,
+    duration: "12 episodios",
+    isNew: true,
+    is4K: false,
+    description: "Risas garantizadas con esta divertida serie de situaciones."
+  },
+  {
+    title: "Misterios Nocturnos",
+    image: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=600&fit=crop",
+    genre: "Misterio",
+    year: 2023,
+    rating: 8.9,
+    duration: "6 episodios",
+    isNew: false,
+    is4K: true,
+    description: "Cada noche trae un nuevo misterio por resolver."
+  }
+];
+
+const documentaries = [
+  {
+    title: "Planeta Tierra 2024",
+    image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=600&fit=crop",
+    genre: "Naturaleza",
+    year: 2024,
+    rating: 9.5,
+    duration: "6 episodios",
+    isNew: true,
+    is4K: true,
+    description: "La naturaleza como nunca antes la habías visto."
+  },
+  {
+    title: "Historia Oculta",
+    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=600&fit=crop",
+    genre: "Historia",
+    year: 2023,
+    rating: 8.8,
+    duration: "4 episodios",
+    isNew: false,
+    is4K: true,
+    description: "Descubre los secretos mejor guardados de la historia."
+  },
+  {
+    title: "Innovación Tecnológica",
+    image: "https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=400&h=600&fit=crop",
+    genre: "Tecnología",
+    year: 2024,
+    rating: 8.4,
+    duration: "8 episodios",
+    isNew: true,
+    is4K: true,
+    description: "El futuro de la tecnología está aquí."
+  }
+];
+---
+
+<Layout title="StreamFlix - Tu plataforma de entretenimiento sin límites">
+  <Header />
+  
+  <main>
+    <Hero />
+    
+    <!-- Películas Destacadas -->
+    <section id="peliculas" class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title animate-on-scroll">Películas Destacadas</h2>
+          <p class="section-subtitle animate-on-scroll">Los últimos estrenos y clásicos imperdibles</p>
+        </div>
+        
+        <div class="content-carousel animate-on-scroll">
+          <div class="carousel-container">
+            <div class="carousel-track" id="movies-track">
+              {featuredMovies.map((movie) => (
+                <MovieCard {...movie} />
+              ))}
+            </div>
+            
+            <button class="carousel-btn carousel-btn-prev" id="movies-prev" aria-label="Anterior">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+              </svg>
+            </button>
+            
+            <button class="carousel-btn carousel-btn-next" id="movies-next" aria-label="Siguiente">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Series Populares -->
+    <section id="series" class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title animate-on-scroll">Series Populares</h2>
+          <p class="section-subtitle animate-on-scroll">Las series más vistas y mejor valoradas</p>
+        </div>
+        
+        <div class="content-carousel animate-on-scroll">
+          <div class="carousel-container">
+            <div class="carousel-track" id="series-track">
+              {popularSeries.map((series) => (
+                <MovieCard {...series} />
+              ))}
+            </div>
+            
+            <button class="carousel-btn carousel-btn-prev" id="series-prev" aria-label="Anterior">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+              </svg>
+            </button>
+            
+            <button class="carousel-btn carousel-btn-next" id="series-next" aria-label="Siguiente">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Documentales -->
+    <section id="documentales" class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title animate-on-scroll">Documentales</h2>
+          <p class="section-subtitle animate-on-scroll">Aprende y descubre con contenido educativo de calidad</p>
+        </div>
+        
+        <div class="content-carousel animate-on-scroll">
+          <div class="carousel-container">
+            <div class="carousel-track" id="docs-track">
+              {documentaries.map((doc) => (
+                <MovieCard {...doc} />
+              ))}
+            </div>
+            
+            <button class="carousel-btn carousel-btn-prev" id="docs-prev" aria-label="Anterior">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+              </svg>
+            </button>
+            
+            <button class="carousel-btn carousel-btn-next" id="docs-next" aria-label="Siguiente">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Mi Lista -->
+    <section id="mi-lista" class="content-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title animate-on-scroll">Mi Lista</h2>
+          <p class="section-subtitle animate-on-scroll">Continúa viendo donde lo dejaste</p>
+        </div>
+        
+        <div class="my-list-empty animate-on-scroll">
+          <div class="empty-state">
+            <svg class="empty-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+            <h3>Tu lista está vacía</h3>
+            <p>Agrega películas y series a tu lista para verlas más tarde</p>
+            <button class="btn btn-primary">Explorar Contenido</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
+
+<style>
+  main {
+    padding-top: 0;
+  }
+  
+  .content-section {
+    padding: var(--spacing-2xl) 0;
+    position: relative;
+  }
+  
+  .content-section:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+  
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    background: linear-gradient(135deg, var(--text-primary), var(--accent-red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .content-carousel {
+    position: relative;
+  }
+  
+  .carousel-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+  }
+  
+  .carousel-track {
+    display: flex;
+    gap: var(--spacing-lg);
+    transition: transform var(--transition-normal);
+    padding: var(--spacing-sm);
+  }
+  
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .carousel-container:hover .carousel-btn {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .carousel-btn:hover {
+    background: var(--accent-red);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  .carousel-btn svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+  }
+  
+  .carousel-btn-prev {
+    left: var(--spacing-sm);
+  }
+  
+  .carousel-btn-next {
+    right: var(--spacing-sm);
+  }
+  
+  .my-list-empty {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .empty-state {
+    text-align: center;
+    max-width: 400px;
+  }
+  
+  .empty-icon {
+    width: 80px;
+    height: 80px;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .empty-state h3 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+  }
+  
+  .empty-state p {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .content-section {
+      padding: var(--spacing-xl) 0;
+    }
+    
+    .section-header {
+      margin-bottom: var(--spacing-xl);
+    }
+    
+    .carousel-track {
+      gap: var(--spacing-md);
+      padding: var(--spacing-xs);
+    }
+    
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .carousel-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .carousel-track {
+      gap: var(--spacing-sm);
+    }
+    
+    .carousel-btn {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Carousel functionality
+    function initCarousel(trackId: string, prevBtnId: string, nextBtnId: string) {
+      const track = document.getElementById(trackId) as HTMLElement;
+      const prevBtn = document.getElementById(prevBtnId) as HTMLElement;
+      const nextBtn = document.getElementById(nextBtnId) as HTMLElement;
+      
+      if (!track || !prevBtn || !nextBtn) return;
+      
+      const cards = track.children;
+      const firstCard = cards[0] as HTMLElement;
+      const cardWidth = firstCard?.offsetWidth + 24 || 304; // card width + gap
+      let currentIndex = 0;
+      const parentElement = track.parentElement as HTMLElement;
+      const maxIndex = Math.max(0, cards.length - Math.floor(parentElement.offsetWidth / cardWidth));
+      
+      function updateCarousel() {
+        const translateX = -currentIndex * cardWidth;
+        track.style.transform = `translateX(${translateX}px)`;
+        
+        prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+        nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+      }
+      
+      prevBtn.addEventListener('click', function() {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateCarousel();
+        }
+      });
+      
+      nextBtn.addEventListener('click', function() {
+        if (currentIndex < maxIndex) {
+          currentIndex++;
+          updateCarousel();
+        }
+      });
+      
+      // Touch/swipe support for mobile
+      let startX = 0;
+      let isDragging = false;
+      
+      track.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+      });
+      
+      track.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+      });
+      
+      track.addEventListener('touchend', function(e) {
+        if (!isDragging) return;
+        
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > 50) {
+          if (diff > 0 && currentIndex < maxIndex) {
+            currentIndex++;
+          } else if (diff < 0 && currentIndex > 0) {
+            currentIndex--;
+          }
+          updateCarousel();
+        }
+        
+        isDragging = false;
+      });
+      
+      // Initialize
+      updateCarousel();
+      
+      // Update on window resize
+      window.addEventListener('resize', function() {
+        const parentEl = track.parentElement as HTMLElement;
+        const newMaxIndex = Math.max(0, cards.length - Math.floor(parentEl.offsetWidth / cardWidth));
+        if (currentIndex > newMaxIndex) {
+          currentIndex = newMaxIndex;
+        }
+        updateCarousel();
+      });
+    }
+    
+    // Initialize all carousels
+    initCarousel('movies-track', 'movies-prev', 'movies-next');
+    initCarousel('series-track', 'series-prev', 'series-next');
+    initCarousel('docs-track', 'docs-prev', 'docs-next');
+    
+    // Empty state button
+    const exploreBtn = document.querySelector('.empty-state .btn');
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', function() {
+        document.getElementById('peliculas')?.scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    }
+    
+    // Context7 state management example
+    if ((window as any).Context7) {
+      // Update current section based on scroll
+      const sections = document.querySelectorAll('section[id]');
+      
+      window.addEventListener('scroll', function() {
+        let current = '';
+        sections.forEach(function(section) {
+          const sectionTop = (section as HTMLElement).offsetTop;
+          if (scrollY >= sectionTop - 200) {
+            current = section.getAttribute('id') || '';
+          }
+        });
+        
+        if (current) {
+          (window as any).Context7.setState({ currentSection: current });
+        }
+      });
+    }
+  });
+</script>
+</Layout>

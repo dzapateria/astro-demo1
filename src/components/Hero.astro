@@ -1,0 +1,519 @@
+---
+// Hero section component
+---
+
+<section id="inicio" class="hero">
+  <div class="hero-background">
+    <div class="hero-overlay"></div>
+    <img 
+      src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1920&h=1080&fit=crop&crop=center" 
+      alt="Hero Background" 
+      class="hero-image"
+    />
+  </div>
+  
+  <div class="hero-content container">
+    <div class="hero-text animate-on-scroll">
+      <h1 class="hero-title">
+        Entretenimiento
+        <span class="text-gradient">Sin Límites</span>
+      </h1>
+      <p class="hero-description">
+        Descubre miles de películas, series y documentales en la mejor calidad. 
+        Streaming ilimitado con la experiencia más inmersiva que jamás hayas vivido.
+      </p>
+      
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">50K+</span>
+          <span class="stat-label">Películas</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">15K+</span>
+          <span class="stat-label">Series</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">4K</span>
+          <span class="stat-label">Ultra HD</span>
+        </div>
+      </div>
+      
+      <div class="hero-actions">
+        <button class="btn btn-primary hero-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          Reproducir Ahora
+        </button>
+        <button class="btn btn-secondary hero-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          Mi Lista
+        </button>
+        <button class="btn btn-secondary hero-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+          Más Info
+        </button>
+      </div>
+    </div>
+    
+    <div class="hero-featured animate-on-scroll">
+      <div class="featured-card">
+        <div class="featured-image">
+          <img 
+            src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=600&fit=crop" 
+            alt="Película Destacada"
+          />
+          <div class="play-overlay">
+            <button class="play-btn" aria-label="Reproducir">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <div class="featured-info">
+          <div class="featured-badges">
+            <span class="badge badge-new">Nuevo</span>
+            <span class="badge badge-4k">4K</span>
+            <span class="badge badge-rating">9.2</span>
+          </div>
+          
+          <h3 class="featured-title">El Último Reino</h3>
+          <p class="featured-genre">Acción • Drama • Fantasía</p>
+          
+          <div class="featured-meta">
+            <span class="duration">2h 45min</span>
+            <span class="year">2024</span>
+            <span class="age-rating">16+</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="hero-scroll-indicator">
+    <div class="scroll-arrow">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+      </svg>
+    </div>
+    <span class="scroll-text">Desliza para explorar</span>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 70px;
+  }
+  
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+  }
+  
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(10, 10, 10, 0.8) 0%,
+      rgba(10, 10, 10, 0.4) 50%,
+      rgba(10, 10, 10, 0.8) 100%
+    );
+    z-index: -1;
+  }
+  
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: var(--spacing-2xl);
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-2xl) var(--spacing-md);
+  }
+  
+  .hero-text {
+    max-width: 600px;
+  }
+  
+  .hero-title {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .hero-description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xl);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .hero-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .stat-item {
+    text-align: center;
+  }
+  
+  .stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-red);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .stat-label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+  }
+  
+  .hero-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+  
+  .hero-btn {
+    font-size: 1.1rem;
+    padding: var(--spacing-md) var(--spacing-xl);
+    min-width: 160px;
+    justify-content: center;
+  }
+  
+  .hero-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .hero-featured {
+    justify-self: end;
+  }
+  
+  .featured-card {
+    background: var(--gradient-card);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-normal);
+    max-width: 350px;
+  }
+  
+  .featured-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+  }
+  
+  .featured-image {
+    position: relative;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+  }
+  
+  .featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+  
+  .featured-card:hover .featured-image img {
+    transform: scale(1.05);
+  }
+  
+  .play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+  
+  .featured-card:hover .play-overlay {
+    opacity: 1;
+  }
+  
+  .play-btn {
+    background: var(--accent-red);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);
+  }
+  
+  .play-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(229, 9, 20, 0.6);
+  }
+  
+  .play-btn svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+    margin-left: 2px;
+  }
+  
+  .featured-info {
+    padding: var(--spacing-lg);
+  }
+  
+  .featured-badges {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .badge {
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  .badge-new {
+    background: var(--accent-red);
+    color: white;
+  }
+  
+  .badge-4k {
+    background: var(--accent-blue);
+    color: white;
+  }
+  
+  .badge-rating {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid #ffc107;
+  }
+  
+  .featured-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .featured-genre {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .featured-meta {
+    display: flex;
+    gap: var(--spacing-sm);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  
+  .featured-meta span {
+    position: relative;
+  }
+  
+  .featured-meta span:not(:last-child)::after {
+    content: '•';
+    position: absolute;
+    right: -8px;
+  }
+  
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--text-secondary);
+    animation: bounce 2s infinite;
+  }
+  
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .scroll-text {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-5px);
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .hero-content {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+      text-align: center;
+    }
+    
+    .hero-featured {
+      justify-self: center;
+    }
+    
+    .featured-card {
+      max-width: 300px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .hero {
+      min-height: 90vh;
+    }
+    
+    .hero-content {
+      padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 4rem);
+    }
+    
+    .hero-description {
+      font-size: 1rem;
+    }
+    
+    .hero-stats {
+      justify-content: center;
+      gap: var(--spacing-lg);
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+    }
+    
+    .hero-actions {
+      justify-content: center;
+    }
+    
+    .hero-btn {
+      min-width: 140px;
+      font-size: 1rem;
+      padding: var(--spacing-sm) var(--spacing-lg);
+    }
+    
+    .featured-card {
+      max-width: 280px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-stats {
+      gap: var(--spacing-md);
+    }
+    
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .hero-btn {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Parallax effect for hero background
+    const heroImage = document.querySelector('.hero-image') as HTMLElement;
+    
+    if (heroImage) {
+      window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        heroImage.style.transform = `translateY(${rate}px)`;
+      });
+    }
+    
+    // Play button functionality
+    const playButtons = document.querySelectorAll('.play-btn, .btn-primary');
+    playButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        // Simulate play action
+        console.log('Reproduciendo contenido...');
+        
+        // Add loading state
+        const htmlButton = button as HTMLElement;
+        htmlButton.style.opacity = '0.7';
+        htmlButton.style.pointerEvents = 'none';
+        
+        setTimeout(function() {
+          htmlButton.style.opacity = '1';
+          htmlButton.style.pointerEvents = 'auto';
+        }, 1000);
+      });
+    });
+    
+    // Featured card interaction
+    const featuredCard = document.querySelector('.featured-card');
+    if (featuredCard) {
+      featuredCard.addEventListener('mouseenter', function() {
+        // Add hover sound effect (optional)
+        console.log('Hover effect activated');
+      });
+    }
+  });
+</script>

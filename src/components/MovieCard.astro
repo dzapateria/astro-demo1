@@ -1,0 +1,449 @@
+---
+export interface Props {
+  title: string;
+  image: string;
+  genre: string;
+  year: number;
+  rating: number;
+  duration?: string;
+  isNew?: boolean;
+  is4K?: boolean;
+  description?: string;
+}
+
+const { 
+  title, 
+  image, 
+  genre, 
+  year, 
+  rating, 
+  duration = "2h 15min",
+  isNew = false,
+  is4K = false,
+  description = "Una experiencia cinematográfica única que te mantendrá al borde de tu asiento."
+} = Astro.props;
+---
+
+<div class="movie-card" data-title={title}>
+  <div class="movie-poster">
+    <img 
+      src={image} 
+      alt={title}
+      loading="lazy"
+      class="poster-image"
+    />
+    
+    <div class="movie-overlay">
+      <div class="overlay-content">
+        <button class="play-btn" aria-label={`Reproducir ${title}`}>
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
+        
+        <div class="movie-actions">
+          <button class="action-btn" aria-label="Agregar a mi lista">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+          </button>
+          
+          <button class="action-btn" aria-label="Me gusta">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+            </svg>
+          </button>
+          
+          <button class="action-btn" aria-label="Más información">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="movie-badges">
+      {isNew && <span class="badge badge-new">Nuevo</span>}
+      {is4K && <span class="badge badge-4k">4K</span>}
+      <span class="badge badge-rating">{rating}</span>
+    </div>
+  </div>
+  
+  <div class="movie-info">
+    <h3 class="movie-title">{title}</h3>
+    <div class="movie-meta">
+      <span class="movie-year">{year}</span>
+      <span class="movie-genre">{genre}</span>
+      <span class="movie-duration">{duration}</span>
+    </div>
+    <p class="movie-description">{description}</p>
+    
+    <div class="movie-progress">
+      <div class="progress-bar">
+        <div class="progress-fill" style="width: 0%"></div>
+      </div>
+      <span class="progress-text">No visto</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .movie-card {
+    position: relative;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 280px;
+    max-width: 320px;
+  }
+  
+  .movie-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--accent-red);
+  }
+  
+  .movie-poster {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+  }
+  
+  .poster-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+  
+  .movie-card:hover .poster-image {
+    transform: scale(1.1);
+  }
+  
+  .movie-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+  
+  .movie-card:hover .movie-overlay {
+    opacity: 1;
+  }
+  
+  .overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+  
+  .play-btn {
+    background: var(--accent-red);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 20px rgba(229, 9, 20, 0.4);
+  }
+  
+  .play-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(229, 9, 20, 0.6);
+  }
+  
+  .play-btn svg {
+    width: 24px;
+    height: 24px;
+    color: white;
+    margin-left: 2px;
+  }
+  
+  .movie-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+  
+  .action-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    backdrop-filter: blur(10px);
+  }
+  
+  .action-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+  }
+  
+  .action-btn svg {
+    width: 18px;
+    height: 18px;
+    color: white;
+  }
+  
+  .movie-badges {
+    position: absolute;
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+  
+  .badge {
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+  }
+  
+  .badge-new {
+    background: var(--accent-red);
+    color: white;
+  }
+  
+  .badge-4k {
+    background: var(--accent-blue);
+    color: white;
+  }
+  
+  .badge-rating {
+    background: rgba(255, 193, 7, 0.9);
+    color: #000;
+    font-weight: 700;
+  }
+  
+  .movie-info {
+    padding: var(--spacing-lg);
+  }
+  
+  .movie-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-primary);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .movie-meta {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+  
+  .movie-meta span {
+    position: relative;
+  }
+  
+  .movie-meta span:not(:last-child)::after {
+    content: '•';
+    position: absolute;
+    right: -8px;
+    color: var(--text-muted);
+  }
+  
+  .movie-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-bottom: var(--spacing-md);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .movie-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+  
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: var(--accent-red);
+    border-radius: 2px;
+    transition: width var(--transition-normal);
+  }
+  
+  .progress-text {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  
+  /* Hover states for better UX */
+  .movie-card:hover .movie-title {
+    color: var(--accent-red);
+  }
+  
+  .movie-card:hover .progress-fill {
+    background: #ff6b6b;
+  }
+  
+  /* Loading state */
+  .movie-card.loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  
+  .movie-card.loading .poster-image {
+    filter: blur(2px);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .movie-card {
+      min-width: 240px;
+      max-width: 280px;
+    }
+    
+    .movie-info {
+      padding: var(--spacing-md);
+    }
+    
+    .movie-title {
+      font-size: 1rem;
+    }
+    
+    .play-btn {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .action-btn {
+      width: 35px;
+      height: 35px;
+    }
+    
+    .action-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const movieCards = document.querySelectorAll('.movie-card');
+    
+    movieCards.forEach(function(card) {
+      const playBtn = card.querySelector('.play-btn');
+      const actionBtns = card.querySelectorAll('.action-btn');
+      const progressFill = card.querySelector('.progress-fill') as HTMLElement;
+      const progressText = card.querySelector('.progress-text') as HTMLElement;
+      
+      // Play button functionality
+      if (playBtn) {
+        playBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const title = card.getAttribute('data-title');
+          console.log(`Reproduciendo: ${title}`);
+          
+          // Simulate progress
+          if (progressFill && progressText) {
+            let progress = 0;
+            const interval = setInterval(function() {
+              progress += 10;
+              progressFill.style.width = `${progress}%`;
+              
+              if (progress >= 100) {
+                progressText.textContent = 'Completado';
+                clearInterval(interval);
+              } else {
+                progressText.textContent = `${progress}% visto`;
+              }
+            }, 200);
+          }
+        });
+      }
+      
+      // Action buttons functionality
+      actionBtns.forEach(function(btn, index) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const title = card.getAttribute('data-title');
+          
+          const htmlBtn = btn as HTMLElement;
+          
+          switch(index) {
+            case 0: // Add to list
+              console.log(`Agregado a Mi Lista: ${title}`);
+              htmlBtn.style.background = 'var(--accent-red)';
+              setTimeout(function() {
+                htmlBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+              }, 1000);
+              break;
+            case 1: // Like
+              console.log(`Me gusta: ${title}`);
+              htmlBtn.style.background = 'var(--accent-red)';
+              setTimeout(function() {
+                htmlBtn.style.background = 'rgba(255, 255, 255, 0.2)';
+              }, 1000);
+              break;
+            case 2: // More info
+              console.log(`Más información: ${title}`);
+              // Could open a modal or navigate to details page
+              break;
+          }
+        });
+      });
+      
+      // Card click functionality
+      card.addEventListener('click', function() {
+        const title = card.getAttribute('data-title');
+        console.log(`Seleccionado: ${title}`);
+        // Could navigate to movie details page
+      });
+    });
+  });
+</script>

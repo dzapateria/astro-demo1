@@ -3,6 +3,10 @@
   "type": "module",
   "version": "1.0.0",
   "description": "Landing page estilo Netflix/Steam con Astro y Context7",
+  "engines": {
+    "node": "20",
+    "npm": ">=9.6.5"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
